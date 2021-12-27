@@ -12,6 +12,7 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/f88e555234/c
 contract ClassMetadata{
     using Address for address;
     using Strings for uint256;
+    using EnumerableSet.UintSet for set;
 
     // classid
     struct class {
@@ -29,7 +30,7 @@ contract ClassMetadata{
     mapping(uint256 => class) public _class;        ///class的拥有者，注册时就新增一个
     mapping(uint256 => address) public _holders;
     ///classId => tokenId
-    mapping(uint256 => EnumerableSet.UintSet) public _classes;       ///一对多，查询某class下的所有tokenId
+    mapping(uint256 => set) public _classes;       ///一对多，查询某class下的所有tokenId
     ///tokenId => classId
     mapping(uint256 => uint256) public _tokenIdClass;  ///多对多，查询tokenId所属class
     
