@@ -25,9 +25,9 @@ contract ClassMetadata{
     // address public _owner;  ///该class的拥有者
     /// 已经存在的classid个数
     uint256 public _registerCount;
-    // class owners
+    // class _holders
     mapping(uint256 => class) public _class;        ///class的拥有者，注册时就新增一个
-    mapping(uint256 => address) public _owners;
+    mapping(uint256 => address) public _holders;
     ///classId => tokenId
     mapping(uint256 => EnumerableSet.UintSet) public _classes;       ///一对多，查询某class下的所有tokenId
     ///tokenId => classId
@@ -54,7 +54,7 @@ contract ClassMetadata{
             _frozen : frozen
         });
         _class[_registerCount] = __class;
-        _owners[_registerCount] = to;
+        _holders[_registerCount] = to;
     }
 
     ///对class属性的设置
@@ -63,7 +63,7 @@ contract ClassMetadata{
     }
     function setTransferable(uint256 classId,bool transferable) public {
         ///只有class所有者才可以进行设置
-        address owner = _owners[classId];
+        address owner = _holders[classId];
         require(msg.sender == owner,"only owner can set class");
        
         _class[classId]._transferable = transferable;
@@ -73,7 +73,7 @@ contract ClassMetadata{
     }
     function setBurnable(uint256 classId,bool burnable) public {
         ///只有class所有者才可以进行设置
-        address owner = _owners[classId];
+        address owner = _holders[classId];
         require(msg.sender == owner,"only owner can set class");
        
         _class[classId]._burnable = burnable;
@@ -83,7 +83,7 @@ contract ClassMetadata{
     }
     function setMintable(uint256 classId,bool mintable) public {
         ///只有class所有者才可以进行设置
-        address owner = _owners[classId];
+        address owner = _holders[classId];
         require(msg.sender == owner,"only owner can set class");
        
         _class[classId]._mintable = mintable;
@@ -93,7 +93,7 @@ contract ClassMetadata{
     }
     function setFrozen(uint256 classId,bool frozen) public {
         ///只有class所有者才可以进行设置
-        address owner = _owners[classId];
+        address owner = _holders[classId];
         require(msg.sender == owner,"only owner can set class");
        
         _class[classId]._frozen = frozen;
@@ -101,7 +101,7 @@ contract ClassMetadata{
      ///为nft设置classId和移除
     function addClassForNft(uint256 tokenId,uint256 classId) public {
         ///只有class所有者才可以进行设置
-        address owner = _owners[classId];
+        address owner = _holders[classId];
         require(msg.sender == owner,"only owner can set class");
         ///一个tokenId只能有一个classId
         require(_tokenIdClass[tokenId] == 0,"tokenId is assigned classId");
@@ -110,6 +110,6 @@ contract ClassMetadata{
         _tokenIdClass[tokenId] = classId;
     }
      function getOwner(uint256 classId) public view returns (address){
-        return _owners[classId];
+        return _holders[classId];
     }
 }
