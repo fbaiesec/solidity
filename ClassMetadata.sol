@@ -22,16 +22,16 @@ contract ClassMetadata{
         bool _frozen;
     }
     // // class owner
-    // address private _owner;  ///该class的拥有者
+    // address public _owner;  ///该class的拥有者
     /// 已经存在的classid个数
-    uint256 private _registerCount;
+    uint256 public _registerCount;
     // class owners
-    mapping(uint256 => class) private _class;        ///class的拥有者，注册时就新增一个
-    mapping(uint256 => address) private _owners;
+    mapping(uint256 => class) public _class;        ///class的拥有者，注册时就新增一个
+    mapping(uint256 => address) public _owners;
     ///classId => tokenId
-    mapping(uint256 => EnumerableSet.UintSet) private _classes;       ///一对多，查询某class下的所有tokenId
+    mapping(uint256 => EnumerableSet.UintSet) public _classes;       ///一对多，查询某class下的所有tokenId
     ///tokenId => classId
-    mapping(uint256 => uint256) private _tokenIdClass;  ///多对多，查询tokenId所属class
+    mapping(uint256 => uint256) public _tokenIdClass;  ///多对多，查询tokenId所属class
     
     constructor() {
        _registerCount = 0;
